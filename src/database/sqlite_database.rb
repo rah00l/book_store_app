@@ -1,70 +1,95 @@
-# sqlite_database.rb
-
 require 'sqlite3'
 
 class SQLiteDatabase
-  attr_accessor :connection
-
   def initialize
     @connection = SQLite3::Database.new('book_store.db')
-    create_tables
+    setup
   end
 
-  def create_tables
-    @connection.execute <<-SQL
+  def setup
+    # Drop tables if they exist
+    @connection.execute("DROP TABLE IF EXISTS books")
+    @connection.execute("DROP TABLE IF EXISTS publishers")
+
+    create_books_table
+    create_publishers_table
+    seed_data
+  end
+
+  def create_books_table
+    @connection.execute(<<-SQL)
       CREATE TABLE IF NOT EXISTS books (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT,
         author TEXT,
         description TEXT,
         price REAL,
-        availability INTEGER
+        publisher_id INTEGER,
+        availability BOOLEAN,
+        FOREIGN KEY (publisher_id) REFERENCES publishers(id)
       );
+    SQL
   end
 
-  def add_book(book)
-    @connection.execute(
-      'INSERT INTO books (title, author, description, price, availability) VALUES (?, ?, ?, ?, ?)',
-      [book.title, book.author, book.description, book.price, book.availability ? 1 : 0]
-    )
+  def create_publishers_table
+    @connection.execute(<<-SQL)
+      CREATE TABLE IF NOT EXISTS publishers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        catalog_home TEXT,
+        catalog_search TEXT
+      );
+    SQL
   end
 
-  # def fetch_books
-  #   result = @connection.execute('SELECT * FROM books')
-  #   result.map { |row| Book.new(*row[1..-1]) }
-  # end
+    def fetch_books(input)
+      query = "SELECT * FROM books WHERE 1=1 AND (title LIKE ? OR author LIKE ?)"
+      params = ["%#{input}%", "%#{input}%"]
+      @connection.execute(query, params).map { |row| Book.new(*row[1..-1]) }
+    end
 
-  # def fetch_books(params)
-  #   query = 'SELECT * FROM books WHERE 1=1'
+    def fetch_books_by_publisher(publisher_name)
+      query = <<~SQL
+        SELECT * FROM books
+        WHERE publisher_id IN (SELECT id FROM publishers WHERE name LIKE ?)
+      SQL
 
-  #   debugger
-  #   # Add conditions for title and author if provided
-  #   if params[:title]
-  #     query += " AND title LIKE ?"
-  #     title_param = "%#{params[:title]}%"
-  #   end
+      params = ["%#{publisher_name}%"]
 
-  #   if params[:author]
-  #     query += " AND author LIKE ?"
-  #     author_param = "%#{params[:author]}%"
-  #   end
+      @connection.execute(query, params).map do |row|
+        Book.new(*row[1..-1])
+      end
+    end
 
-  #   # Construct the parameters array
-  #   params_array = [title_param, author_param].compact
+    def find_book_by_title(title)
+      query = "SELECT * FROM books WHERE title LIKE ? LIMIT 1"
+      params = ["%#{title}%"]
 
-  #   debugger
-  #   @connection.execute(query, params_array).map { |row| Book.new(*row[1..-1]) }
-  # end
+      result = @connection.execute(query, params).first
 
-  def fetch_books(input)
-    query = "SELECT * FROM books WHERE 1=1 AND (title LIKE ? OR author LIKE ?)"
-    params = ["%#{input}%", "%#{input}%"]
+      if result.nil?
+        nil
+      else
+        Book.new(*result[1..-1])
+      end
+    end
 
-    @connection.execute(query, params).map { |row| Book.new(*row[1..-1]) }
+
+  def seed_data
+    # Seed data for books
+    @connection.execute(<<-SQL)
+      INSERT INTO books (title, author, description, price, publisher_id, availability)
+      VALUES ('Ruby Basics', 'John Doe', 'A guide to Ruby programming', 29.99, 1, 1),
+             ('Web Development', 'Jane Smith', 'Building web applications with Ruby on Rails', 39.99, 2, 0);
+    SQL
+
+    # Seed data for publishers
+    @connection.execute(<<-SQL)
+      INSERT INTO publishers (name, catalog_home, catalog_search)
+      VALUES ('Publisher1', 'http://publisher1.com', 'http://publisher1.com/search?q='),
+             ('Publisher2', 'http://publisher2.com', 'http://publisher2.com/search?q='),
+             ('Publisher3', 'http://publisher3.com', 'http://publisher3.com/search?q=');
+
+    SQL
   end
-
-
-  # def search_books(search_term)
-  #   fetch_books.select { |book| book.matches_search_term?(search_term) }
-  # end
 end
