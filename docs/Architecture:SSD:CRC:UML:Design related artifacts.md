@@ -205,4 +205,4 @@ Certainly! Based on the provided use cases, here is a refined UML diagram and de
   - Responsibilities: Perform searches by title, author, or publisher.
   - Collaborators: Book.
 
-This should give you a starting point for your domain model. You can further refine it based on specific functionalities and requirements. If you have any specific questions or if you'd like to discuss any aspect in more detail, feel free to let me know!
+This should give you a starting point for your domain model. You can further refine it based on specific functionalities and requirements.
