@@ -1,0 +1,39 @@
+book_store_app/
+|-- src/
+|   |-- models/
+|   |   |-- book.rb
+|   |   |-- customer.rb
+|   |   |-- order.rb
+|   |   |-- catalog.rb
+|   |   |-- inventory.rb
+|   |
+|   |-- services/
+|   |   |-- search_service.rb
+|   |   |-- order_service.rb
+|   |
+|   |-- database/
+|   |   |-- local_database.rb
+|   |
+|   |-- app.rb
+|
+|-- db/
+|   |-- schema.sql
+|
+|-- spec/
+|   |-- models/
+|   |   |-- book_spec.rb
+|   |   |-- customer_spec.rb
+|   |   |-- order_spec.rb
+|   |   |-- catalog_spec.rb
+|   |   |-- inventory_spec.rb
+|   |
+|   |-- services/
+|   |   |-- search_service_spec.rb
+|   |   |-- order_service_spec.rb
+|   |
+|   |-- spec_helper.rb
+|
+|-- Gemfile
+|-- README.md
+|-- .gitignore
+
