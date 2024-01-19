@@ -98,8 +98,6 @@ This architecture allows for scalability by easily integrating new publishers' c
 These use cases cover the main functionalities of the Book Store application. 
 
 
-Certainly! Based on the provided use cases, here is a refined UML diagram and descriptions for the identified domain classes:
-
 ### UML Diagram:
 
 ```
