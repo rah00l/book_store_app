@@ -9,7 +9,8 @@
    The Book Store App simplifies book discovery for customers. It enables searches by author, title, or publisher, providing comprehensive details, even for out-of-stock items. The app seamlessly integrates a local database with online catalogs for a complete search experience.
 
 ## Table of Contents:
-   - Create a table of contents for quick navigation.
+   - [Usage](#usage)
+   - [Documentation](#documentation)
 
 ## Installation:
    Make sure you have Ruby (ruby-3.0.0) installed. Then run the following commands:
