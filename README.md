@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/yourusername/yourproject/badge.svg?branch=master)](https://coveralls.io/github/yourusername/yourproject?branch=master)
 
 
-## Book Store App Description:
+## Description:
 
    The Book Store App simplifies book discovery for customers. It enables searches by author, title, or publisher, providing comprehensive details, even for out-of-stock items. The app seamlessly integrates a local database with online catalogs for a complete search experience.
 
