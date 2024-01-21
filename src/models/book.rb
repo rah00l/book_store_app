@@ -13,7 +13,7 @@ class Book
   end
 
   def self.search_books
-    puts 'Enter the title or author of the book you are searching for:'
+    puts 'Enter the *title or author* of the book you are ** searching ** for:'
     user_input = gets.chomp
 
     # Search in the local database
@@ -30,7 +30,7 @@ class Book
   end
 
   def self.search_books_by_publisher
-    puts 'Enter the publisher name of the book you are searching for:'
+    puts 'Enter the *Publisher Name* of the book you are ** searching ** for:'
 
     publisher_name = gets.chomp
     results = SQLiteDatabase.new.fetch_books_by_publisher(publisher_name)
@@ -47,7 +47,7 @@ class Book
 
 
   def self.display_book_details
-   puts 'Enter the title of the book you want to view:'
+   puts 'Enter the *title* of the book you want to ** view **:'
     user_input = gets.chomp
 
     # Search for the book in the local database
@@ -66,7 +66,7 @@ class Book
   end
 
   def self.buy_a_book
-   puts 'Enter the title of the book you want to buy:'
+   puts 'Enter the *title* of the book you want to ** buy **:'
     user_input = gets.chomp
 
     # Search for the book in the local database
@@ -77,13 +77,13 @@ class Book
     else
       puts "Book Details:"
       puts "#{book.title} by #{book.author}, Availability: #{book.availability ? 'Available' : 'Not Available'}"
-             buy_option = Book.ask_user('Do you want to buy this book? (yes/no)').downcase
+             buy_option = Book.ask_user('Do you want to **buy this book?** (yes/no)').downcase
              Book.update_availability(book) if buy_option == 'yes' && book.availability
     end
   end
 
   def self.place_an_order
-    puts 'Enter the title of the book you want to buy:'
+    puts 'Enter the *title* of the book you want to ** order **:'
      user_input = gets.chomp
 
      # Search for the book in the local database
@@ -96,7 +96,7 @@ class Book
 
        if book.availability != 1
           puts "#{book.title} by #{book.author}, Availability: #{book.availability ? 'Available' : 'Not Available'}"
-              order_option = Book.ask_user('Do you want to place an order for this book? (yes/no)').downcase
+              order_option = Book.ask_user('Do you want to **place an order for this book?** (yes/no)').downcase
           puts "#{book.title} by #{book.author}, Order has been placed!"
         else
             puts "#{book.title} by #{book.author}, Availability: #{book.availability ? 'Available' : 'Not Available'}"

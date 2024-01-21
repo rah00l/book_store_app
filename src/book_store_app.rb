@@ -44,26 +44,6 @@ class BookStoreApp
       end
     end
   end
-
-
-  # # search_books(sqlite_database, "Ruby")
-  # def search_books
-  #   puts 'Enter the title or author of the book you are searching for:'
-  #   user_input = gets.chomp
-
-  #   # Search in the local database
-  #   # results = SQLiteDatabase.new.fetch_books(title: title_input, author: author_input)
-  #   results = SQLiteDatabase.new.fetch_books(user_input)
-
-  #   if results.empty?
-  #     puts 'No matching books found.'
-  #   else
-  #     puts 'Matching books:'
-  #     results.each do |book|
-  #       puts "#{book.title} by #{book.author}"
-  #     end
-  #   end
-  # end
 end
 
 
