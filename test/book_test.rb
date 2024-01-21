@@ -62,6 +62,25 @@ class BookTest < Minitest::Test
     assert_mock @sqlite_database_mock
   end
 
+  def test_display_book_details_from_remote_catalog
+    puts "\n\nRunning test: test_display_book_details_from_remote_catalog, Expected input: 'Book1'"
+    # Set expectations on the mock for find_book_by_title
+    
+    remote_book = Book.new('Remote Book1', 'Remote Author', 'Sample Description', 29.99, 1, true)
+    @sqlite_database_mock.expect(:find_book_by_title, nil, ['Book1'])
+
+    # Stub the new method to return the mock
+    SQLiteDatabase.stub(:new, @sqlite_database_mock) do
+      # Perform the test
+      result = Book.display_book_details
+
+    end
+
+    # Verify that the find_book_by_title method was called with the expected arguments
+    assert_mock @sqlite_database_mock
+  end
+
+
   def test_display_book_details_not_found
     puts "\n\nRunning test: test_display_book_details_not_found, Expected input: 'blank'"
     # Set expectations on the mock for find_book_by_title
