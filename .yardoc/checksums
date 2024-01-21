@@ -1,0 +1,8 @@
+src/models/book.rb 3808a4e2854daa1d2b8a2378bc288e85a3b12cbd
+src/book_store_app.rb e11030083f399e8c313f43e600357fb54e60773f
+src/models/customer.rb e05da86908f87639aae50ed374761226834bbd8c
+src/models/publisher.rb ae1d2bb97152921974bac8e6a33fb87b74ac8ca2
+src/services/order_service.rb da39a3ee5e6b4b0d3255bfef95601890afd80709
+src/database/local_database.rb 3222daafd6002078f64648c3b4716c28ec26e4a5
+src/services/search_service.rb da39a3ee5e6b4b0d3255bfef95601890afd80709
+src/database/sqlite_database.rb 3efc47b302c41617e5fc8d8b80e61c5188cd77c5
