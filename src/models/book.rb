@@ -54,7 +54,15 @@ class Book
     book = SQLiteDatabase.new.find_book_by_title(user_input)
 
     if book.nil?
-      puts 'Book not found.'
+      book_from_remote_catalog = Book.search_remote_catalog(user_input).first
+      puts "\nBook #{user_input} is not in stock! \nthe store keeper has to look up catalogs provided by the publishers."
+      
+      if !book_from_remote_catalog.nil?
+        puts "\n:Book Details:"
+        puts "#{book_from_remote_catalog.title} by #{book_from_remote_catalog.author}" 
+      else
+        puts 'Book not found.'
+      end
     else
       puts "Book Details:"
       puts "Title: #{book.title}"
@@ -62,6 +70,30 @@ class Book
       puts "Description: #{book.description}"
       puts "Price: #{book.price}"
       puts "Availability: #{book.availability ? 'Available' : 'Out of stock'}"
+    end
+  end
+
+
+  def self.search_remote_catalog(search_query)
+    # For demo purposes, we'll use a hash to represent remote catalog data
+    remote_catalog_data = {
+      'book1' => { 'title' => 'Book1', 'author' => 'Author 1' },
+      'book2' => { 'title' => ' Book2', 'author' => 'Author 2' },
+      # Add more books as needed
+    }
+
+    # Simulate searching in the remote catalog
+    remote_results = remote_catalog_data.values.select do |book_data|
+      book_data['title'].include?(search_query) || book_data['author'].include?(search_query)
+    end
+
+    Book.parse_remote_results(remote_results)
+  end
+
+  def self.parse_remote_results(remote_catalog_results)
+    # For demo purposes, we'll simply convert the hash data into Book objects
+    remote_catalog_results.map do |book_data|
+      Book.new(book_data['title'], book_data['author'], '', 10.0, 2, 1)
     end
   end
 
