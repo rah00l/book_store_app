@@ -10,7 +10,7 @@
 	<!-- Display the list of books or search results -->
 	<% @books.each do |book| %>
 	  <div>
-	    <h2><%= book.title %></h2>
+	    <h2><%= link_to book.title, book_path(book) %></h2>
 	    <p>Author: <%= book.author %></p>
 	    <p>Description: <%= book.description %></p>
 	    <p>Price: <%= number_to_currency(book.price) %></p>

@@ -10,4 +10,8 @@ class BooksController < ApplicationController
 			format.html
 		end
 	end
+
+	def show
+		@book = Book.find(params[:id])
+	end
 end
