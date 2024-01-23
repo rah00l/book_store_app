@@ -1,0 +1,20 @@
+<h1>Books</h1>
+
+<!-- Display a search form -->
+<%= form_tag(books_path, method: :get) do %>
+  <%= text_field_tag :query, params[:query], placeholder: "Search by Author or Title" %>
+  <%= submit_tag "Search" %>
+<% end %>
+<% if @books.present? %>
+		<!-- Display the list of books or search results -->
+		<% @books.each do |book| %>
+		  <div>
+		    <h2><%= book.title %></h2>
+		    <p>Author: <%= book.author %></p>
+		    <p>Publisher: <%= book.publisher %></p>
+		    <!-- Add other book details as needed -->
+		  </div>
+		<% end %>
+	<% else %>
+		<p>No books found.</p>
+<% end %>
