@@ -5,16 +5,27 @@
   <%= text_field_tag :query, params[:query], placeholder: "Search by Author or Title" %>
   <%= submit_tag "Search" %>
 <% end %>
+
 <% if @books.present? %>
-		<!-- Display the list of books or search results -->
-		<% @books.each do |book| %>
-		  <div>
-		    <h2><%= book.title %></h2>
-		    <p>Author: <%= book.author %></p>
-		    <p>Publisher: <%= book.publisher %></p>
-		    <!-- Add other book details as needed -->
-		  </div>
-		<% end %>
-	<% else %>
+	<!-- Display the list of books or search results -->
+	<% @books.each do |book| %>
+	  <div>
+	    <h2><%= book.title %></h2>
+	    <p>Author: <%= book.author %></p>
+	    <p>Description: <%= book.description %></p>
+	    <p>Price: <%= number_to_currency(book.price) %></p>
+
+	    <% if book.availability %>
+	      <p>Availability: In Stock</p>
+	    <% else %>
+	      <p>Availability: Out of Stock</p>
+	    <% end %>
+
+	    <p>Publisher: <%= book.publisher.name %></p>
+
+	    <!-- Add more details as needed -->
+	  </div>
+	<% end %>
+<% else %>
 		<p>No books found.</p>
 <% end %>
