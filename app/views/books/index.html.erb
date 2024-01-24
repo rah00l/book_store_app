@@ -6,6 +6,13 @@
   <%= submit_tag "Search" %>
 <% end %>
 
+<br><br>
+<%= form_with(url: search_by_publisher_books_path, method: :get) do |form| %>
+  <%= form.label :publisher_name, 'Search by Publisher:' %>
+  <%= form.text_field :publisher_name %>
+  <%= form.submit 'Search' %>
+<% end %>
+
 <% if @books.present? %>
 	<!-- Display the list of books or search results -->
 	<% @books.each do |book| %>

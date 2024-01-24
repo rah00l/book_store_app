@@ -14,4 +14,10 @@ class BooksController < ApplicationController
 	def show
 		@book = Book.find(params[:id])
 	end
+
+	def search_by_publisher
+		@books = Book.fetch_books_by_publisher(params[:publisher_name])
+		render :index
+	end
+
 end
