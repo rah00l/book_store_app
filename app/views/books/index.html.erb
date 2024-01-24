@@ -1,42 +1,117 @@
-<h1>Books</h1>
+<!-- app/views/books/index.html.erb -->
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
 
-<!-- Display a search form -->
-<%= form_tag(books_path, method: :get, class: "book-search-form") do %>
-  <%= text_field_tag :query, params[:query], placeholder: "Search by Author or Title" %>
-  <%= submit_tag "Search" %>
-<% end %>
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
 
-<br><br>
-<%= form_with(url: search_by_publisher_books_path, method: :get, class: 'publisher-search-form') do |form| %>
-  <%= form.label :publisher_name, 'Search by Publisher:' %>
-  <%= form.text_field :publisher_name %>
-  <%= form.submit 'Search' %>
-<% end %>
+  th {
+    background-color: #f2f2f2;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  .search-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  search-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .search-form {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+
+  .search-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .search-form input[type="text"] {
+    width: 80%; /* Adjust the width as needed */
+    padding: 8px;
+  }
+
+  .search-form input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .search-form input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+</style>
+
+<h2>Books</h2>
+
+<div class="search-container">
+  <div class="search-form">
+    <%= form_tag(books_path, method: :get, class: "book-search-form") do %>
+      <%= label_tag :query, 'Search by Author or Title' %>
+      <%= text_field_tag :query, params[:query], placeholder: "Search by Author or Title" %>
+      <%= submit_tag "Search" %>
+    <% end %>
+  </div>
+
+  <div class="search-form">
+    <%= form_with(url: search_by_publisher_books_path, method: :get, class: 'publisher-search-form') do |form| %>
+      <%= form.label :publisher_name, 'Search by Publisher:' %>
+      <%= form.text_field :publisher_name, placeholder: "Search by Publisher" %>
+      <%= form.submit 'Search' %>
+    <% end %>
+  </div>
+</div>
+
 
 <% if @books.present? %>
-	<!-- Display the list of books or search results -->
-	<% @books.each do |book| %>
-	  <div class="book-details">
-	    <h2><%= link_to book.title, book_path(book) %></h2>
-	    <p>Author: <%= book.author %></p>
-	    <p>Description: <%= book.description %></p>
-	    <p>Price: <%= number_to_currency(book.price) %></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Availability</th>
+        <th>Publisher</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td><%= link_to book.title, book_path(book) %></td>
+          <td><%= book.author %></td>
+          <td><%= book.description %></td>
+          <td><%= number_to_currency(book.price) %></td>
 
-	    <% if book.availability %>
-	      <p>Availability: In Stock</p>
-	    <% else %>
-	      <p>Availability: Out of Stock</p>
-	    <% end %>
+          <% if book.availability %>
+            <td>In Stock</td>
+          <% else %>
+            <td>Out of Stock</td>
+          <% end %>
 
-	    <% if book.publisher.present? %>
-	      <p>Publisher: <%= book.publisher.name %></p>
-	    <% else %>
-	      <p>Publisher: Not specified</p>
-	    <% end %>
-
-	    <!-- Add more details as needed -->
-	  </div>
-	<% end %>
+          <td><%= book.publisher.present? ? book.publisher.name : 'Not specified' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
-		<p>No books found.</p>
+  <p>No books found.</p>
 <% end %>

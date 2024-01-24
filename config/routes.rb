@@ -5,4 +5,7 @@ Rails.application.routes.draw do
     get 'search_by_publisher', on: :collection
     post 'buy', on: :member
   end
+
+  # Set the root path to books#index
+  root to: 'books#index'
 end

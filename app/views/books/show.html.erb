@@ -1,23 +1,69 @@
+<!-- app/views/books/show.html.erb -->
 
-<h1><%= @book.title %></h1>
-<p><strong>Author:</strong> <%= @book.author %></p>
-<p><strong>Description:</strong> <%= @book.description %></p>
-<p><strong>Price:</strong> <%= number_to_currency(@book.price) %></p>
-<p><strong>Publisher:</strong> <%= @book.publisher.name %></p>
+<style>
+  .book-details-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
+  h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
 
-<% if @book.availability? %>
-  <%= form_with(url: buy_book_path(@book), method: :post) do |form| %>
-    <%= submit_tag 'Buy Now', onclick: 'return confirmBuy()' %>
+  p {
+    margin-bottom: 8px;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  .buy-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .buy-button:hover {
+    background-color: #45a049;
+  }
+
+  .back-link {
+    display: block;
+    margin-top: 20px;
+  }
+</style>
+
+<div class="book-details-container">
+  <h1><%= @book.title %></h1>
+  <p><strong>Author:</strong> <%= @book.author %></p>
+  <p><strong>Description:</strong> <%= @book.description %></p>
+  <p><strong>Price:</strong> <%= number_to_currency(@book.price) %></p>
+  <p><strong>Publisher:</strong> <%= @book.publisher.name %></p>
+
+  <% if @book.availability? %>
+    <%= form_with(url: buy_book_path(@book), method: :post) do |form| %>
+      <%= submit_tag 'Buy Now', class: 'buy-button', onclick: 'return confirmBuy()' %>
+    <% end %>
+  <% else %>
+    <%= form_with(url: buy_book_path(@book), method: :post) do |form| %>
+      <%= submit_tag 'Place Order', class: 'buy-button', onclick: 'return confirmPlaceOrder()' %>
+    <% end %>
   <% end %>
-<% else %>
-  <%= form_with(url: buy_book_path(@book), method: :post) do |form| %>
-  	<%= submit_tag 'Place Order', onclick: 'return confirmPlaceOrder()' %>
-  <% end %>
-<% end %>
 
-<br><br><br>
-<%= link_to 'Back to Books', books_path %>
+  <br><br><br>
+
+  <%= link_to 'Back to Books', books_path, class: 'back-link' %>
+</div>
 
 <script>
   function confirmBuy() {
@@ -25,7 +71,7 @@
   }
 
   function confirmPlaceOrder() {
-    return confirm('Are you sure you want to place order this book?');
+    return confirm('Are you sure you want to place an order for this book?');
   }
 </script>
-
+  
