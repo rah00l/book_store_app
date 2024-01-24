@@ -4,6 +4,21 @@
 <p><strong>Description:</strong> <%= @book.description %></p>
 <p><strong>Price:</strong> <%= number_to_currency(@book.price) %></p>
 <p><strong>Publisher:</strong> <%= @book.publisher.name %></p>
-<p><strong>Availability:</strong> <%= @book.availability ? 'In Stock' : 'Out of Stock' %></p>
 
+<% if @book.availability? %>
+  <%= form_with(url: buy_book_path(@book), method: :post) do %>
+    <%= submit_tag 'Buy Now', onclick: 'return confirmBuy()' %>
+  <% end %>
+		
+<% else %>
+	<p>This book is currently not available for purchase.</p>
+<% end %>
+<br><br><br>
 <%= link_to 'Back to Books', books_path %>
+
+<script>
+  function confirmBuy() {
+    return confirm('Are you sure you want to buy this book?');
+  }
+</script>
+

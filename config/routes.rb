@@ -3,5 +3,6 @@ Rails.application.routes.draw do
 
   resources :books, only: [:index, :show] do
     get 'search_by_publisher', on: :collection
+    post 'buy', on: :member
   end
 end
