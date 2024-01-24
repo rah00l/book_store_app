@@ -1,13 +1,13 @@
 <h1>Books</h1>
 
 <!-- Display a search form -->
-<%= form_tag(books_path, method: :get) do %>
+<%= form_tag(books_path, method: :get, class: "book-search-form") do %>
   <%= text_field_tag :query, params[:query], placeholder: "Search by Author or Title" %>
   <%= submit_tag "Search" %>
 <% end %>
 
 <br><br>
-<%= form_with(url: search_by_publisher_books_path, method: :get) do |form| %>
+<%= form_with(url: search_by_publisher_books_path, method: :get, class: 'publisher-search-form') do |form| %>
   <%= form.label :publisher_name, 'Search by Publisher:' %>
   <%= form.text_field :publisher_name %>
   <%= form.submit 'Search' %>
@@ -16,7 +16,7 @@
 <% if @books.present? %>
 	<!-- Display the list of books or search results -->
 	<% @books.each do |book| %>
-	  <div>
+	  <div class="book-details">
 	    <h2><%= link_to book.title, book_path(book) %></h2>
 	    <p>Author: <%= book.author %></p>
 	    <p>Description: <%= book.description %></p>
@@ -28,7 +28,11 @@
 	      <p>Availability: Out of Stock</p>
 	    <% end %>
 
-	    <p>Publisher: <%= book.publisher.name %></p>
+	    <% if book.publisher.present? %>
+	      <p>Publisher: <%= book.publisher.name %></p>
+	    <% else %>
+	      <p>Publisher: Not specified</p>
+	    <% end %>
 
 	    <!-- Add more details as needed -->
 	  </div>

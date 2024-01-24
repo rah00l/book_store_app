@@ -1,6 +1,7 @@
 class Book < ApplicationRecord
 
-	belongs_to :publisher
+	belongs_to :publisher, optional: true
+	
 
 	def self.search(query)
 	  where('author LIKE ? OR title LIKE ?', "%#{query}%", "%#{query}%")
