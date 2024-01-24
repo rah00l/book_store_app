@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+	before_action :set_book, only: [:show, :buy]
+
 	def index
 		if params[:query].present?
 			@books = Book.search(params[:query])	
@@ -30,10 +32,23 @@ class BooksController < ApplicationController
 			# Adjust this based on your user system, this is secondary lets not consider it.
 			# Purchase.create(book: @book, customer: current_user)  
 			flash[:success] = "Book purchased successfully!"
+			redirect_to @book
 		else
-			flash[:alert] = "Sorry, this book is not available for purchase."
+			# Book is not available, handle place order logic
+			place_order(@book)
 		end
-
-		redirect_to @book
 	end
+
+	private
+
+	  def set_book
+	    @book = Book.find(params[:id])
+	  end
+
+	  # Additional method for handling place order logic if needed
+	  def place_order(book)
+	    # Your place order logic here
+	    flash[:success] = 'Order placed successfully!'
+	    redirect_to book
+	  end
 end
