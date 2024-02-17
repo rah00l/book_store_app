@@ -14,6 +14,10 @@ Welcome to the Book Store App, a Ruby on Rails application designed to provide b
 - Place orders for out-of-stock books
 - Search books by publisher
 
+## Live Demo
+
+<a href="https://github.com/rah00l/book_store_app"><img src="app/assets/images/iterable_integration.gif"></a>
+
 ## Getting Started
 
 To get started with the Book Store App, follow these steps:
