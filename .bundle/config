@@ -1,0 +1,3 @@
+---
+BUNDLE____LOCAL: "with development test"
+BUNDLE_WITHOUT: "production"
